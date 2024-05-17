@@ -1,4 +1,3 @@
-import React from 'react'
 import { Restaurant } from '@/components'
 import { restaurants } from '@/constants/mock.js'
 import { DefaultLayout } from '@/layouts'
