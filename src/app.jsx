@@ -1,4 +1,4 @@
-import { Restaurant } from '@/components'
+import { Restaurants } from '@/components'
 import { restaurants } from '@/constants/mock.js'
 import { DefaultLayout } from '@/layouts'
 
@@ -6,11 +6,9 @@ export const App = () => {
   return (
     <div>
       <DefaultLayout>
-        <div>
-          { restaurants.map(restaurant => {
-            return <Restaurant key={ restaurant.id } restaurant={ restaurant }/>
-          }) }
-        </div>
+        <Restaurants
+          restaurants={ restaurants }
+          tabIndex={ 0 }/>
       </DefaultLayout>
     </div>
   )
