@@ -7,7 +7,7 @@ export const App = () => {
     <div>
       <DefaultLayout>
         <Restaurants
-          list={ restaurants }
+          restaurants={ restaurants }
           tabIndex={ 0 }/>
       </DefaultLayout>
     </div>

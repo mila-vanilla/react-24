@@ -1,26 +1,26 @@
 import { useState } from 'react'
 import { Restaurant } from '@/components'
 
-export const Restaurants = ({ list, tabIndex }) => {
-  const [activeTab, setActiveTab] = useState(Math.min(tabIndex, list.length))
+export const Restaurants = ({ restaurants, tabIndex }) => {
+  const [activeTab, setActiveTab] = useState(Math.min(tabIndex, restaurants.length))
 
-  if (!list.length) {
+  if (!restaurants.length) {
     return 'No restaurants yet'
   }
 
   return (
     <>
       <ul>
-        { list.map((i, idx) => {
+        { restaurants.map((restaurant, idx) => {
           return (
-            <li key={ i.id } onClick={ () => setActiveTab(idx) }>
-              <b>{ i.name } </b>
+            <li key={ restaurant.id } onClick={ () => setActiveTab(idx) }>
+              <b>{ restaurant.name } </b>
             </li>
           )
         }) }
       </ul>
 
-      <Restaurant restaurant={ list[ activeTab ] }/>
+      <Restaurant restaurant={ restaurants[activeTab] }/>
     </>
   )
 }
