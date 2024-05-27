@@ -6,7 +6,7 @@ export const useCounter = (initial = 0, options = {}) => {
 
   const set = useCallback((value) => {
     setCount(() => {
-      return Math.max(Math.min(max, value), 0)
+      return Math.max(Math.min(max, value), min)
     })
   }, [])
 
