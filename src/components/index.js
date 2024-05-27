@@ -6,6 +6,7 @@ import { Reviews } from './reviews/component'
 import { Dish } from './dish/component'
 import { Menu } from './menu/component'
 import { Restaurants } from './restaurants/component'
+import { Counter } from './counter/component'
 
 export {
   Header,
@@ -15,5 +16,6 @@ export {
   Reviews,
   Dish,
   Menu,
-  Restaurants
+  Restaurants,
+  Counter
 }

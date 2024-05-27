@@ -1,15 +1,41 @@
-import { useState } from 'react'
+import { useCounter } from '@/hooks/useCounter'
+import { Counter } from '@/components'
+import { useCallback, useEffect } from 'react'
+
+const min = 0
+const max = 5
 
 export const Dish = ({ dish }) => {
-  const [count, setCount] = useState(0)
+  const { count, increment, decrement, set } = useCounter(0, { max })
+
+  const invokeEvent = useCallback((event) => {
+    console.log(event)
+  }, [])
+
+  useEffect(() => {
+    invokeEvent('dish mounted')
+    increment()
+  }, [increment, invokeEvent])
+
+  useEffect(() => {
+    invokeEvent('count set up')
+  }, [count, invokeEvent])
+
   return (
     <>
       <div>{ dish.name }:{ dish.price }</div>
-      <div>
-        <button onClick={ () => count && setCount(count - 1) }>-</button>
-        { count }
-        <button onClick={ () => count < 5 && setCount(count + 1) }>+</button>
-      </div>
+
+      <button onClick={ () => set(max) }>
+        Take all
+      </button>
+      <Counter
+        min={ min }
+        max={ max }
+        count={ count }
+        onPlus={ increment }
+        onMinus={ decrement }
+      />
     </>
   )
 }
+
