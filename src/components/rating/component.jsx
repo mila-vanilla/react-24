@@ -21,6 +21,3 @@ export const Rating = ({ value, onChange }) => {
     </div>
   )
 }
-
-
-
