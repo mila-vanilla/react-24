@@ -10,6 +10,10 @@ export const useCounter = (initial = 0, options = {}) => {
     })
   }, [])
 
+  const reset = useCallback(() => {
+    setCount(initial)
+  }, [])
+
   const decrement = useCallback(() => {
     setCount(currentCount => {
       return currentCount === min ? currentCount : currentCount - 1
@@ -22,5 +26,5 @@ export const useCounter = (initial = 0, options = {}) => {
     })
   }, [])
 
-  return { count, increment, decrement, set }
+  return { count, increment, decrement, set, reset }
 }
