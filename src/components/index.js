@@ -10,6 +10,7 @@ import { Counter } from './counter/component'
 import { Rating } from './rating/component'
 import { ReviewForm } from './reviewForm/component'
 import { IconBox } from './iconBox/component'
+import { ScrollProgress } from './scrollProgress/component'
 
 export {
   Header,
@@ -23,5 +24,6 @@ export {
   Counter,
   Rating,
   ReviewForm,
-  IconBox
+  IconBox,
+  ScrollProgress
 }
