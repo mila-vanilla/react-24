@@ -1,23 +1,15 @@
 import { createPortal } from 'react-dom'
+import styles from './modal.module.css'
 
-const STYLES = {
-  position: 'fixed',
-  inset: 0,
-  height: '100vh',
-  width: '100vw',
-  background: 'grey',
-  opacity: 0.5
-}
-
-export const Modal = ({ onChange }) => {
+export const Modal = ({ onClose, children }) => {
   return <>
     { createPortal(
       <div>
-        <div style={ { ...STYLES } }
-             onClick={ onChange }>
+        <div className={ styles.backdrop }
+             onClick={ onClose }>
         </div>
-        <div style={ { position: 'absolute', top: '100px', background: 'white' } }>
-          hi
+        <div className={ styles.modal }>
+          { children }
         </div>
       </div>, document.getElementById('modal-root'))
     }

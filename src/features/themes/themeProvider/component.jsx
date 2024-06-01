@@ -11,13 +11,14 @@ export const ThemeProvider = ({ children }) => {
         { children }
       </div>
 
-      <style jsx>{ `
+      <style jsx="true">{ `
       button {
-        background: ${ settings?.accentColor };
+        background: ${ settings.accentColor };
       }
     ` }</style>
 
     </ThemeContext.Provider>
   )
 }
+
 

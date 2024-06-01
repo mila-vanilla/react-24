@@ -1,0 +1,7 @@
+.form {
+    background: white;
+    min-width: 200px;
+    padding: 16px;
+    display: grid;
+    grid-gap: 16px;
+}
