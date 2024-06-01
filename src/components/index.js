@@ -7,6 +7,10 @@ import { Dish } from './dish/component'
 import { Menu } from './menu/component'
 import { Restaurants } from './restaurants/component'
 import { Counter } from './counter/component'
+import { Rating } from './rating/component'
+import { ReviewForm } from './reviewForm/component'
+import { IconBox } from './iconBox/component'
+import { ScrollProgress } from './scrollProgress/component'
 
 export {
   Header,
@@ -17,5 +21,9 @@ export {
   Dish,
   Menu,
   Restaurants,
-  Counter
+  Counter,
+  Rating,
+  ReviewForm,
+  IconBox,
+  ScrollProgress
 }

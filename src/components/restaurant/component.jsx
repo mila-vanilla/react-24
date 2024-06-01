@@ -1,4 +1,4 @@
-import { Menu, Reviews } from '@/components'
+import { Menu, ReviewForm, Reviews } from '@/components'
 
 export const Restaurant = ({ restaurant }) => {
   return (
@@ -10,6 +10,11 @@ export const Restaurant = ({ restaurant }) => {
 
       <h3>Reviews</h3>
       <Reviews reviews={ restaurant.reviews }/>
+
+      <div>
+        <h3> Leave a review </h3>
+        <ReviewForm/>
+      </div>
     </div>
   )
 }
