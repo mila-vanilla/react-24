@@ -11,6 +11,7 @@ import { Rating } from './rating/component'
 import { ReviewForm } from './reviewForm/component'
 import { IconBox } from './iconBox/component'
 import { ScrollProgress } from './scrollProgress/component'
+import { Modal } from '@/components/modal/component.jsx'
 
 export {
   Header,
@@ -25,5 +26,6 @@ export {
   Rating,
   ReviewForm,
   IconBox,
-  ScrollProgress
+  ScrollProgress,
+  Modal
 }
