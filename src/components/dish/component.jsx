@@ -8,8 +8,8 @@ const max = 5
 export const Dish = ({ dish }) => {
   const { count, increment, decrement, set } = useCounter(0, { max })
 
-  const invokeEvent = useCallback((event) => {
-    console.log(event)
+  const invokeEvent = useCallback(() => {
+    // console.log(event)
   }, [])
 
   useEffect(() => {
