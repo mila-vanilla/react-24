@@ -1,10 +1,16 @@
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useState } from 'react'
 import { AuthContext } from '@/features/auth/index.js'
 import styles from './signInForm.module.css'
 
 export const SignInForm = ({ onClose }) => {
   const [name, setName] = useState('')
   const { setAccount } = useContext(AuthContext)
+
+  const handleLogin = useCallback(() => {
+    setAccount({ name })
+    onClose()
+  }, [name])
+
   return (
     <div className={ styles.form }>
       <input
@@ -16,10 +22,7 @@ export const SignInForm = ({ onClose }) => {
 
       <button
         disabled={ !name }
-        onClick={ () => {
-          setAccount({ name })
-          onClose()
-        } }>
+        onClick={ () => handleLogin()}>
         Sign in
       </button>
       <button onClick={ () => onClose() }>Cancel</button>

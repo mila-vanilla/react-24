@@ -1,11 +1,15 @@
 import { AuthContext } from '@/features/auth/authContext'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 export const AuthProvider = ({ children }) => {
   const [account, setAccount] = useState({})
 
+  const contextValue = useMemo(() => {
+    return { account, setAccount }
+  }, [account])
+
   return (
-    <AuthContext.Provider value={ { account, setAccount } }>
+    <AuthContext.Provider value={ contextValue }>
       { children }
     </AuthContext.Provider>
   )
