@@ -1,12 +1,12 @@
 import { Dish } from '@/components'
 
-export const Menu = ({ menu }) => {
-  if (menu && menu.length) {
+export const Menu = ({ menuIds }) => {
+  if (menuIds && menuIds.length) {
     return (
       <ul>
-        { menu.map(dish => {
-          return <li key={ dish.id }>
-            <Dish dish={ dish }/>
+        { menuIds.map(id => {
+          return <li key={ id }>
+            <Dish dishId={ id }/>
           </li>
         }) }
       </ul>

@@ -1,12 +1,14 @@
 import { useCounter } from '@/hooks/useCounter'
 import { Counter } from '@/components'
 import { useCallback, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const min = 0
 const max = 5
 
-export const Dish = ({ dish }) => {
+export const Dish = ({ dishId }) => {
   const { count, increment, decrement, set } = useCounter(0, { max })
+  const dish = useSelector(state => state.dish.entities[dishId])
 
   const invokeEvent = useCallback(() => {
     // console.log(event)
@@ -38,4 +40,3 @@ export const Dish = ({ dish }) => {
     </>
   )
 }
-
