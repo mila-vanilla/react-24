@@ -1,52 +1,33 @@
-import { useRef, useState } from 'react'
-import { Restaurant, ScrollProgress } from '@/components'
-import { useScrollProgress } from '@/hooks/useScrollProgress.js'
+import { useState } from 'react'
+import { Restaurant } from '@/components'
+import { useSelector } from 'react-redux'
 
-// For demo purpose
-const STYLES = {
-  height: '500px',
-  overflow: 'auto',
-  padding: '32px',
-  margin: '32px 0',
-  border: '3px solid grey',
-  borderRadius: '16px'
-}
+export const Restaurants = ({ tabIndex }) => {
+  const restaurantsIds = useSelector(state => {
+    return state.restaurant.ids
+  })
+  const restaurants = useSelector(state => {
+    return state.restaurant.entities
+  })
+  const [activeRestaurantId, setActiveRestaurantId] = useState(restaurantsIds[tabIndex])
 
-export const Restaurants = ({ restaurants, tabIndex }) => {
-  const [activeTab, setActiveTab] = useState(Math.min(tabIndex, restaurants.length))
-  const scroller = useRef()
-  const { scrollProgress } = useScrollProgress(scroller)
-
-  if (!restaurants.length) {
+  if (!restaurantsIds.length) {
     return 'No restaurants yet'
   }
 
   return (
     <div>
-      <ScrollProgress progress={ scrollProgress }/>
-      <ul>
-        { restaurants.map((restaurant, idx) => {
-          return (
-            <li key={ restaurant.id } onClick={ () => setActiveTab(idx) }>
-              <b>{ restaurant.name } </b>
-            </li>
-          )
-        }) }
-      </ul>
-      <div ref={ scroller } style={ { ...STYLES } }>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
-        <Restaurant restaurant={ restaurants[activeTab] }/>
+      <div>
+        <ul>
+          { Object.values(restaurants).map(({ name, id }) => {
+            return (
+              <li key={ id } onClick={ () => setActiveRestaurantId(id) }>
+                <b>{ name } </b>
+              </li>
+            )
+          }) }
+        </ul>
+        <Restaurant restaurantId={ activeRestaurantId }/>
       </div>
 
     </div>
