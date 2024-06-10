@@ -1,15 +1,23 @@
-import { useState } from 'react'
-import { Restaurant } from '@/components'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { Restaurant, RestaurantTabLinks } from '@/components'
+import { useDispatch, useSelector } from 'react-redux'
+import { getRestaurants } from '@/redux/entities/restaurant/thunks/getRestaurats'
+import { selectRestaurantIds } from '@/redux/entities/restaurant/selectors'
 
 export const Restaurants = ({ tabIndex }) => {
-  const restaurantsIds = useSelector(state => {
-    return state.restaurant.ids
-  })
-  const restaurants = useSelector(state => {
-    return state.restaurant.entities
-  })
-  const [activeRestaurantId, setActiveRestaurantId] = useState(restaurantsIds[tabIndex])
+  const dispatch = useDispatch()
+  const restaurantsIds = useSelector(selectRestaurantIds)
+
+  const [activeRestaurantId, setActiveRestaurantId] = useState(null)
+
+  useEffect(() => {
+    dispatch(getRestaurants())
+  }, [dispatch])
+
+  useEffect(() => {
+    if (restaurantsIds)
+      setActiveRestaurantId(restaurantsIds[tabIndex])
+  }, [restaurantsIds, setActiveRestaurantId])
 
   if (!restaurantsIds.length) {
     return 'No restaurants yet'
@@ -17,19 +25,9 @@ export const Restaurants = ({ tabIndex }) => {
 
   return (
     <div>
-      <div>
-        <ul>
-          { Object.values(restaurants).map(({ name, id }) => {
-            return (
-              <li key={ id } onClick={ () => setActiveRestaurantId(id) }>
-                <b>{ name } </b>
-              </li>
-            )
-          }) }
-        </ul>
-        <Restaurant restaurantId={ activeRestaurantId }/>
-      </div>
-
+      <RestaurantTabLinks onTabClick={ setActiveRestaurantId }/>
+      <Restaurant restaurantId={ activeRestaurantId }/>
     </div>
   )
 }
+

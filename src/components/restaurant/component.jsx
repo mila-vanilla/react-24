@@ -1,20 +1,23 @@
 import { Menu, ReviewForm, Reviews } from '@/components'
 import { useSelector } from 'react-redux'
+import { selectRestaurantById } from '@/redux/entities/restaurant/selectors.js'
 
 export const Restaurant = ({ restaurantId }) => {
-  const restaurant = useSelector(state => {
-    return state.restaurant.entities[restaurantId]
-  })
+  const restaurant = useSelector((state) => selectRestaurantById(state, restaurantId))
+
+  if (!restaurant) {
+    return
+  }
 
   return (
     <div key={ restaurant.id }>
       <h2>{ restaurant.name }</h2>
 
       <h3>Menu</h3>
-      <Menu menuIds={ restaurant.menu }/>
+      <Menu restaurantId={ restaurant.id }/>
 
       <h3>Reviews</h3>
-      <Reviews reviews={ restaurant.reviews }/>
+      <Reviews restaurantId={ restaurant.id }/>
 
       <div>
         <h3> Leave a review </h3>
