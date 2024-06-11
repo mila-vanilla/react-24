@@ -1,31 +1,49 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useCallback, useEffect, useMemo } from 'react'
 import { getMenuByRestaurantId } from '@/redux/entities/dish/thunks/getMenuByRestaurantId'
 import { Dish } from '@/components/index.js'
 import { selectDishIds } from '@/redux/entities/dish/selectors'
+import { REQUEST_STATUS } from '@/redux/ui/request/constants'
+import { useLazyRequest } from '@/hooks/useLazyRequest'
 
 export const Menu = ({ restaurantId }) => {
   const menu = useSelector(state => selectDishIds(state, restaurantId))
-  const dispatch = useDispatch()
+
+  const params = useMemo(() => {
+    return { restaurantId }
+  }, [restaurantId])
+
+  const [fetchMenuStatus, fetchMenu] = useLazyRequest(
+    getMenuByRestaurantId,
+    params
+  )
+
+  const handleReFetch = useCallback(
+    (forceReFetch = true) => fetchMenu({ restaurantId, forceReFetch }),
+    [restaurantId]
+  )
+
   useEffect(() => {
-    dispatch(getMenuByRestaurantId(restaurantId))
-  }, [dispatch, restaurantId])
+    handleReFetch(false)
+  }, [handleReFetch])
+
+  if (fetchMenuStatus === REQUEST_STATUS.pending) {
+    return <div>Loading...</div>
+  }
 
   if (menu && menu.length) {
     return (
-      <ul>
-        { menu.map(id => {
-          return <li key={ id }>
-            { <Dish dishId={ id }/> }
-          </li>
-        }) }
-      </ul>
+      <div>
+        <button onClick={ () => handleReFetch() }>Refresh</button>
+        <ul>
+          { menu.map(id => {
+            return <li key={ id }>
+              { <Dish dishId={ id }/> }
+            </li>
+          }) }
+        </ul>
+      </div>
+
     )
   }
-
-  return (
-    <div>
-      There is no menu yet, but it’ll be coming soon :)
-    </div>
-  )
 }
