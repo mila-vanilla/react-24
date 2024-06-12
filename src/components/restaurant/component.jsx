@@ -19,7 +19,7 @@ export const Restaurant = ({ restaurant }) => {
 
       <div>
         <h3> Leave a review </h3>
-        <ReviewForm/>
+        <ReviewForm restaurantId={ restaurant.id }/>
       </div>
     </div>
   )

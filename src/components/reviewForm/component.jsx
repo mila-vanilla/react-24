@@ -1,10 +1,9 @@
 import { useReducer } from 'react'
 import { Rating } from '@/components'
+import { useCreateReviewMutation } from '@/redux/service/api'
 
 function reducer (state, { type, payload } = {}) {
   switch (type) {
-    case 'setName':
-      return { ...state, name: payload }
     case 'setText':
       return { ...state, text: payload }
     case 'setRating':
@@ -17,7 +16,6 @@ function reducer (state, { type, payload } = {}) {
 }
 
 const DEFAULT_FORM_VALUE = {
-  name: '',
   text: '',
   rating: 0
 }
@@ -28,21 +26,16 @@ const initializer = initialState => {
   }
 }
 
-export const ReviewForm = () => {
+export const ReviewForm = ({ restaurantId }) => {
   const [form, dispatch] = useReducer(reducer, DEFAULT_FORM_VALUE, initializer)
+  const [createReview, { isLoading }] = useCreateReviewMutation()
+
+  if (isLoading) {
+    return <div>Saving...</div>
+  }
 
   return (
     <div>
-      <div>
-        <span>Name</span>
-        <input
-          type="text"
-          value={ form.name }
-          onChange={ event => {
-            dispatch({ type: 'setName', payload: event.target.value })
-          } }/>
-      </div>
-
       <div>
         <span>Text</span>
         <input
@@ -62,7 +55,18 @@ export const ReviewForm = () => {
           } }/>
       </div>
 
-      <button onClick={ () => dispatch({ type: 'reset' }) }>Save</button>
+      <button onClick={ () => {
+        createReview({
+          restaurantId,
+          newReview: {
+            ...form,
+            user: 'a304959a-76c0-4b34-954a-b38dbf310360',
+          },
+        })
+        dispatch({ type: 'reset' })
+      } }>
+        Save
+      </button>
     </div>
   )
 }
