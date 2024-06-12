@@ -5,6 +5,8 @@ import { RestaurantTabLinks } from './restaurantTabLinks/component'
 import { Restaurants } from './restaurants/component'
 import { Review } from './review/component'
 import { Reviews } from './reviews/component'
+import { EditableReview } from './editableReview/component'
+import { EditReviewForm } from './editReviewForm/component'
 import { Dish } from './dish/component'
 import { Menu } from './menu/component'
 
@@ -22,6 +24,8 @@ export {
   RestaurantTabLinks,
   Restaurants,
   Review,
+  EditableReview,
+  EditReviewForm,
   Reviews,
   Dish,
   Menu,
