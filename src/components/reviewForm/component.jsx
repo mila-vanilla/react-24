@@ -1,68 +1,46 @@
-import { useReducer } from 'react'
 import { Rating } from '@/components'
+import { useCreateReviewMutation } from '@/redux/service/api'
+import { useForm } from '@/hooks/useForm'
 
-function reducer (state, { type, payload } = {}) {
-  switch (type) {
-    case 'setName':
-      return { ...state, name: payload }
-    case 'setText':
-      return { ...state, text: payload }
-    case 'setRating':
-      return { ...state, rating: payload }
-    case 'reset':
-      return DEFAULT_FORM_VALUE
-    default:
-      return state
+export const ReviewForm = ({ restaurantId }) => {
+  const [form, { setRating, reset, setText }] = useForm()
+  const [createReview, { isLoading }] = useCreateReviewMutation()
+
+  if (isLoading) {
+    return <div>Saving...</div>
   }
-}
-
-const DEFAULT_FORM_VALUE = {
-  name: '',
-  text: '',
-  rating: 0
-}
-
-const initializer = initialState => {
-  return {
-    ...initialState, rating: 5
-  }
-}
-
-export const ReviewForm = () => {
-  const [form, dispatch] = useReducer(reducer, DEFAULT_FORM_VALUE, initializer)
 
   return (
     <div>
-      <div>
-        <span>Name</span>
-        <input
-          type="text"
-          value={ form.name }
-          onChange={ event => {
-            dispatch({ type: 'setName', payload: event.target.value })
-          } }/>
-      </div>
-
       <div>
         <span>Text</span>
         <input
           type="text"
           value={ form.text }
-          onChange={ (event) => {
-            dispatch({ type: 'setText', payload: event.target.value })
-          } }/>
+          onChange={ (event) =>
+            setText(event.target.value)
+          }/>
       </div>
 
       <div>
         <span>Rating</span>
         <Rating
           value={ form.rating }
-          onChange={ value => {
-            dispatch({ type: 'setRating', payload: value })
-          } }/>
+          onChange={ value => setRating(value) }/>
       </div>
 
-      <button onClick={ () => dispatch({ type: 'reset' }) }>Save</button>
+      <button onClick={ () => {
+        createReview({
+          restaurantId,
+          newReview: {
+            ...form,
+            user: 'a304959a-76c0-4b34-954a-b38dbf310360',
+          },
+        })
+        reset()
+      } }>
+        Save
+      </button>
     </div>
   )
 }

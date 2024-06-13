@@ -1,31 +1,30 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getMenuByRestaurantId } from '@/redux/entities/dish/thunks/getMenuByRestaurantId'
-import { Dish } from '@/components/index.js'
-import { selectDishIds } from '@/redux/entities/dish/selectors'
+import { Dish } from '@/components/index'
+import { useGetMenuByRestaurantIdQuery } from '@/redux/service/api'
 
 export const Menu = ({ restaurantId }) => {
-  const menu = useSelector(state => selectDishIds(state, restaurantId))
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getMenuByRestaurantId(restaurantId))
-  }, [dispatch, restaurantId])
+  const { data: menu, isLoading, isFetching, refetch } = useGetMenuByRestaurantIdQuery(restaurantId)
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  if (isFetching) {
+    return <div>Updating...</div>
+  }
 
   if (menu && menu.length) {
     return (
-      <ul>
-        { menu.map(id => {
-          return <li key={ id }>
-            { <Dish dishId={ id }/> }
-          </li>
-        }) }
-      </ul>
+      <div>
+        <button onClick={ () => refetch() }>Refresh</button>
+        <ul>
+          { menu.map(dish => {
+            return <li key={ dish.id }>
+              { <Dish dish={ dish }/> }
+            </li>
+          }) }
+        </ul>
+      </div>
+
     )
   }
-
-  return (
-    <div>
-      There is no menu yet, but it’ll be coming soon :)
-    </div>
-  )
 }

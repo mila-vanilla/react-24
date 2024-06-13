@@ -1,14 +1,9 @@
-import { useSelector } from 'react-redux'
-import { selectRestaurants } from '@/redux/entities/restaurant/selectors.js'
-
-export const RestaurantTabLinks = ({ onTabClick }) => {
-  const restaurants = useSelector(selectRestaurants)
-
+export const RestaurantTabLinks = ({ onTabClick, restaurants }) => {
   return (
     <ul>
-      { Object.values(restaurants).map(({ name, id }) => {
+      { restaurants.map(({ name, id }, index) => {
         return (
-          <li key={ id } onClick={ () => onTabClick(id) }>
+          <li key={ id } onClick={ () => onTabClick(index) }>
             <b>{ name } </b>
           </li>
         )

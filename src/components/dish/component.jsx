@@ -6,10 +6,8 @@ import { selectDishById } from '@/redux/entities/dish/selectors.js'
 const min = 0
 const max = 5
 
-export const Dish = ({ dishId }) => {
+export const Dish = ({ dish }) => {
   const { count, increment, decrement, set } = useCounter(0, { max })
-  const dish = useSelector((state) => selectDishById(state, dishId))
-
   return (
     <>
       <div>{ dish.name }:{ dish.price }</div>

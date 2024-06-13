@@ -2,9 +2,7 @@ import { Menu, ReviewForm, Reviews } from '@/components'
 import { useSelector } from 'react-redux'
 import { selectRestaurantById } from '@/redux/entities/restaurant/selectors.js'
 
-export const Restaurant = ({ restaurantId }) => {
-  const restaurant = useSelector((state) => selectRestaurantById(state, restaurantId))
-
+export const Restaurant = ({ restaurant }) => {
   if (!restaurant) {
     return
   }
@@ -21,7 +19,7 @@ export const Restaurant = ({ restaurantId }) => {
 
       <div>
         <h3> Leave a review </h3>
-        <ReviewForm/>
+        <ReviewForm restaurantId={ restaurant.id }/>
       </div>
     </div>
   )

@@ -4,12 +4,15 @@ import { selectReviewIds } from '@/redux/entities/review/selectors'
 
 export const getReviewsByRestaurantId = createAsyncThunk(
   'review/getReviewsByRestaurantId',
-  async (restaurantId) => {
+  async ({ restaurantId }) => {
     const response = await fetch(`http://localhost:3001/api/reviews?restaurantId=${ restaurantId }`)
     return response.json()
   },
   {
-    condition: (restaurantId, { getState }) => {
+    condition: ({ restaurantId, forceReFetch = false }, { getState }) => {
+      if (forceReFetch) {
+        return true
+      }
       const state = getState()
       const loadedReviewIds = selectReviewIds(state)
       const restaurantReviewIds = selectRestaurantReviews(state, restaurantId)
