@@ -1,17 +1,8 @@
-import { useCallback, useEffect } from 'react'
 import { Dish } from '@/components/index'
-import { useLazyGetMenuByRestaurantIdQuery } from '@/redux/service/api'
+import { useGetMenuByRestaurantIdQuery } from '@/redux/service/api'
 
 export const Menu = ({ restaurantId }) => {
-  const [getMenu, { data: menu, isLoading, isFetching }] = useLazyGetMenuByRestaurantIdQuery(restaurantId)
-
-  const handleReFetch = useCallback(() => {
-    getMenu(restaurantId)
-  }, [restaurantId])
-
-  useEffect(() => {
-    handleReFetch()
-  }, [handleReFetch])
+  const { data: menu, isLoading, isFetching, refetch } = useGetMenuByRestaurantIdQuery(restaurantId)
 
   if (isLoading) {
     return <div>Loading...</div>
@@ -24,7 +15,7 @@ export const Menu = ({ restaurantId }) => {
   if (menu && menu.length) {
     return (
       <div>
-        <button onClick={ handleReFetch }>Refresh</button>
+        <button onClick={ () => refetch() }>Refresh</button>
         <ul>
           { menu.map(dish => {
             return <li key={ dish.id }>
