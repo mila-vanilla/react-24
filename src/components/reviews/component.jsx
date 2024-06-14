@@ -1,12 +1,14 @@
 import { EditableReview } from '@/components'
 import { useGetReviewsByRestaurantIdQuery } from '@/redux/service/api'
+import { useParams } from 'react-router-dom'
 
-export const Reviews = ({ restaurantId }) => {
+export const Reviews = () => {
+  const { restaurantId } = useParams()
   const { data: reviews, isLoading, isFetching } =
     useGetReviewsByRestaurantIdQuery(restaurantId)
 
   if (isLoading) {
-    return <div>Saving...</div>
+    return <div>Loading...</div>
   }
 
   if (reviews && reviews.length) {

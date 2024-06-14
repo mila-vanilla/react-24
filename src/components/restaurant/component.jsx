@@ -1,21 +1,28 @@
-import { Menu, ReviewForm, Reviews } from '@/components'
-import { useSelector } from 'react-redux'
-import { selectRestaurantById } from '@/redux/entities/restaurant/selectors.js'
+import { ReviewForm } from '@/components'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { useGetRestaurantsQuery } from '@/redux/service/api'
+import { selectRestaurantFromResult } from '@/redux/service/selectors'
 
-export const Restaurant = ({ restaurant }) => {
-  if (!restaurant) {
-    return
-  }
+export const Restaurant = () => {
+  const { restaurantId } = useParams()
+
+  const { data: restaurant } = useGetRestaurantsQuery(undefined, {
+    skip: !restaurantId,
+    selectFromResult: selectRestaurantFromResult(restaurantId)
+  })
+
+  const navigate = useNavigate()
 
   return (
     <div key={ restaurant.id }>
       <h2>{ restaurant.name }</h2>
 
-      <h3>Menu</h3>
-      <Menu restaurantId={ restaurant.id }/>
+      <div>
+        <button onClick={ () => navigate('menu') }>Menu</button>
+        <button onClick={ () => navigate('reviews') }>Reviews</button>
+      </div>
 
-      <h3>Reviews</h3>
-      <Reviews restaurantId={ restaurant.id }/>
+      <Outlet/>
 
       <div>
         <h3> Leave a review </h3>
