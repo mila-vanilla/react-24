@@ -1,7 +1,9 @@
 import { Dish } from '@/components/index'
 import { useGetMenuByRestaurantIdQuery } from '@/redux/service/api'
+import { useParams } from 'react-router-dom'
 
-export const Menu = ({ restaurantId }) => {
+export const Menu = () => {
+  const { restaurantId } = useParams()
   const { data: menu, isLoading, isFetching, refetch } = useGetMenuByRestaurantIdQuery(restaurantId)
 
   if (isLoading) {
